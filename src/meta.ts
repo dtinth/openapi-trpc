@@ -12,6 +12,9 @@ export const allowedOperationKeys = defineKeys([
   'tags',
 ])
 
+/**
+ * @public
+ */
 export interface OperationMeta
   extends Pick<
     OpenAPIV3.OperationObject,

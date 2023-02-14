@@ -5,6 +5,9 @@ import { OpenAPIV3 } from 'openapi-types'
 import { OperationMeta, allowedOperationKeys } from './meta'
 import { Router } from '@trpc/server'
 
+/**
+ * @public
+ */
 export function generateOpenAPIDocumentFromTRPCRouter<R extends Router<any>>(
   inRouter: R,
   options: GenerateOpenAPIDocumentOptions<MetaOf<R>> = {},
@@ -128,6 +131,9 @@ function asZodType(input: unknown) {
   return input as ZodType
 }
 
+/**
+ * @public
+ */
 export interface GenerateOpenAPIDocumentOptions<M extends OperationMeta> {
   pathPrefix?: string
   processOperation?: (

@@ -4,6 +4,28 @@
 
 ```ts
 
+import { OpenAPIV3 } from 'openapi-types';
+import { Router } from '@trpc/server';
+
+// Warning: (ae-forgotten-export) The symbol "MetaOf" needs to be exported by the entry point index.d.ts
+//
+// @public (undocumented)
+export function generateOpenAPIDocumentFromTRPCRouter<R extends Router<any>>(inRouter: R, options?: GenerateOpenAPIDocumentOptions<MetaOf<R>>): OpenAPIV3.Document<{}>;
+
+// @public (undocumented)
+export interface GenerateOpenAPIDocumentOptions<M extends OperationMeta> {
+    // (undocumented)
+    pathPrefix?: string;
+    // (undocumented)
+    processOperation?: (operation: OpenAPIV3.OperationObject, meta: M | undefined) => OpenAPIV3.OperationObject | void;
+}
+
+// Warning: (ae-forgotten-export) The symbol "allowedOperationKeys" needs to be exported by the entry point index.d.ts
+//
+// @public (undocumented)
+export interface OperationMeta extends Pick<OpenAPIV3.OperationObject, typeof allowedOperationKeys[number]> {
+}
+
 // (No @packageDocumentation comment for this package)
 
 ```
