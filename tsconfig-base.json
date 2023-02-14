@@ -1,0 +1,10 @@
+// This file is automatically managed by <https://github.com/dtinth/repolicy>.
+// Any manual changes to this file may be overwritten.
+
+{
+  "extends": "./node_modules/@rushstack/heft-web-rig/profiles/library/tsconfig-base.json",
+  "compilerOptions": {
+    "skipLibCheck": true,
+    "importHelpers": false
+  }
+}

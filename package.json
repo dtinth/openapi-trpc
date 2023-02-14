@@ -1,0 +1,37 @@
+{
+  "name": "openapi-trpc",
+  "version": "0.0.0",
+  "files": [
+    "src",
+    "lib",
+    "lib-commonjs",
+    "dist"
+  ],
+  "main": "./lib-commonjs/index.js",
+  "module": "./lib/index.js",
+  "types": "./dist/openapi-trpc.d.ts",
+  "docModel": "./dist/openapi-trpc.api.json",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dtinth/openapi-trpc.git"
+  },
+  "homepage": "https://github.com/dtinth/openapi-trpc#readme",
+  "bugs": {
+    "url": "https://github.com/dtinth/openapi-trpc/issues"
+  },
+  "devDependencies": {
+    "@rushstack/heft": "0.48.7",
+    "@rushstack/heft-web-rig": "0.12.10",
+    "@types/heft-jest": "1.0.3",
+    "prettier": "2.7.1",
+    "@changesets/cli": "2.25.0"
+  },
+  "scripts": {
+    "build": "heft build",
+    "test": "heft test",
+    "prepare": "heft build && ./scripts/generate-api-docs",
+    "release": "./scripts/release",
+    "format": "prettier --write .",
+    "api": "./scripts/generate-api-docs"
+  }
+}

@@ -1,0 +1,20 @@
+# This file is automatically managed by <https://github.com/dtinth/repolicy>.
+# Any manual changes to this file may be overwritten.
+
+name: 'Sets up project'
+description: 'Installs Node.js, pnpm, and project dependencies.'
+runs:
+  using: 'composite'
+  steps:
+    - name: Setup pnpm
+      uses: pnpm/action-setup@c3b53f6a16e57305370b4ae5a540c2077a1d50dd # v2.2.4
+      with:
+        version: 7.13.1
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: 16
+        cache: pnpm
+    - name: Install dependencies and build
+      run: pnpm install --prefer-offline
+      shell: bash

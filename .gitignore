@@ -1,0 +1,12 @@
+# This file is automatically managed by <https://github.com/dtinth/repolicy>.
+# Any manual changes to this file may be overwritten.
+
+/lib/
+/lib-commonjs/
+/dist/
+node_modules
+.heft
+temp
+tmp
+.DS_Store
+.data

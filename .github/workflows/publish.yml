@@ -1,0 +1,30 @@
+# This file is automatically managed by <https://github.com/dtinth/repolicy>.
+# Any manual changes to this file may be overwritten.
+
+name: Publish
+on:
+  push:
+    branches:
+      - main
+concurrency: ${{ github.workflow }}-${{ github.ref }}
+jobs:
+  release:
+    name: Release
+    runs-on: ubuntu-20.04
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Setup
+        uses: ./.github/actions/setup
+      - name: Create Release Pull Request or Publish to npm
+        id: changesets
+        uses: changesets/action@2a025e8ab1cfa4312c2868cb6aa3cd3b473b84bf # v1.3.0
+        with:
+          publish: pnpm run release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
