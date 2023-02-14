@@ -26,6 +26,10 @@ const doc = generateOpenAPIDocumentFromTRPCRouter(appRouter, {
 })
 ```
 
+You can then use the `doc` to generate API documentation or a client.
+
+![basic](https://user-images.githubusercontent.com/193136/218788215-f7f9892b-c120-403e-ba4d-ebf334f5a2a6.png)
+
 ## `openapi-trpc` vs `trpc-openapi`
 
 `openapi-trpc` (this library):
