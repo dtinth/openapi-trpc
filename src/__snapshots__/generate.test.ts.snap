@@ -1,5 +1,74 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`lets you post-process each operation, giving typed access to the meta 1`] = `
+Object {
+  "info": Object {
+    "title": "tRPC HTTP-RPC",
+    "version": "",
+  },
+  "openapi": "3.0.0",
+  "paths": Object {
+    "/trpc/private": Object {
+      "get": Object {
+        "operationId": "private",
+        "parameters": Array [
+          Object {
+            "content": Object {
+              "application/json": Object {
+                "schema": Object {
+                  "additionalProperties": false,
+                  "properties": Object {},
+                  "type": "object",
+                },
+              },
+            },
+            "in": "query",
+            "name": "input",
+          },
+        ],
+        "responses": Object {
+          "200": Object {
+            "description": "",
+          },
+        },
+        "security": Array [
+          Object {
+            "bearerAuth": Array [],
+          },
+        ],
+        "tags": Array [],
+      },
+    },
+    "/trpc/public": Object {
+      "get": Object {
+        "operationId": "public",
+        "parameters": Array [
+          Object {
+            "content": Object {
+              "application/json": Object {
+                "schema": Object {
+                  "additionalProperties": false,
+                  "properties": Object {},
+                  "type": "object",
+                },
+              },
+            },
+            "in": "query",
+            "name": "input",
+          },
+        ],
+        "responses": Object {
+          "200": Object {
+            "description": "",
+          },
+        },
+        "tags": Array [],
+      },
+    },
+  },
+}
+`;
+
 exports[`works 1`] = `
 Object {
   "info": Object {

@@ -1,18 +1,25 @@
 import { zodToJsonSchema } from 'zod-to-json-schema'
-import { Procedure, Router } from './dummyRouter'
+import { DummyProcedure, DummyRouter } from './dummyRouter'
 import { z, AnyZodObject, ZodType } from 'zod'
 import { OpenAPIV3 } from 'openapi-types'
-import { allowedOperationKeys } from './meta'
+import { OperationMeta, allowedOperationKeys } from './meta'
+import { Router } from '@trpc/server'
 
-export function generateOpenAPIDocumentFromTRPCRouter(
-  inRouter: any,
-  options: GenerateOpenAPIDocumentOptions = {},
+export function generateOpenAPIDocumentFromTRPCRouter<R extends Router<any>>(
+  inRouter: R,
+  options: GenerateOpenAPIDocumentOptions<MetaOf<R>> = {},
 ) {
-  const router: Router = inRouter
+  const router: DummyRouter = inRouter as unknown as DummyRouter
   const procs = router._def.procedures
   const paths: OpenAPIV3.PathsObject = {}
+  const processOperation = (
+    op: OpenAPIV3.OperationObject,
+    meta: MetaOf<R>,
+  ): OpenAPIV3.OperationObject => {
+    return options.processOperation?.(op, meta) || op
+  }
   for (const [procName, proc] of Object.entries(procs)) {
-    const procDef = proc._def as unknown as Procedure
+    const procDef = proc._def as unknown as DummyProcedure
     const input = procDef.inputs
       .slice(1)
       .reduce<AnyZodObject>(
@@ -52,37 +59,43 @@ export function generateOpenAPIDocumentFromTRPCRouter(
     }
     if (procDef.query) {
       paths[key] = {
-        get: {
-          ...operationInfo,
-          operationId: procName,
-          responses,
-          parameters: [
-            {
-              in: 'query',
-              name: 'input',
+        get: processOperation(
+          {
+            ...operationInfo,
+            operationId: procName,
+            responses,
+            parameters: [
+              {
+                in: 'query',
+                name: 'input',
+                content: {
+                  'application/json': {
+                    schema: inputSchema as any,
+                  },
+                },
+              },
+            ],
+          },
+          procDef.meta as any,
+        ),
+      }
+    } else {
+      paths[key] = {
+        post: processOperation(
+          {
+            ...operationInfo,
+            operationId: procName,
+            responses,
+            requestBody: {
               content: {
                 'application/json': {
                   schema: inputSchema as any,
                 },
               },
             },
-          ],
-        },
-      }
-    } else {
-      paths[key] = {
-        post: {
-          ...operationInfo,
-          operationId: procName,
-          responses,
-          requestBody: {
-            content: {
-              'application/json': {
-                schema: inputSchema as any,
-              },
-            },
           },
-        },
+          procDef.meta as any,
+        ),
       }
     }
   }
@@ -115,11 +128,22 @@ function asZodType(input: unknown) {
   return input as ZodType
 }
 
-export interface GenerateOpenAPIDocumentOptions {
+export interface GenerateOpenAPIDocumentOptions<M extends OperationMeta> {
   pathPrefix?: string
+  processOperation?: (
+    operation: OpenAPIV3.OperationObject,
+    meta: M | undefined,
+  ) => OpenAPIV3.OperationObject | void
 }
 
 function toJsonSchema(input: ZodType) {
   const { $schema, ...output } = zodToJsonSchema(input)
   return output
 }
+
+// 😭
+type MetaOf<R extends Router<any>> = R extends {
+  _def: { _config: { $types: { meta: OperationMeta } } }
+}
+  ? R['_def']['_config']['$types']['meta']
+  : never

@@ -36,3 +36,28 @@ it('works', () => {
   fs.writeFileSync('temp/examples/basic.json', JSON.stringify(doc, null, 2))
   expect(doc).toMatchSnapshot()
 })
+
+it('lets you post-process each operation, giving typed access to the meta', () => {
+  interface AppMeta extends OperationMeta {
+    requiresAuth?: boolean
+  }
+  const t = initTRPC.meta<AppMeta>().create()
+  const router = t.router({
+    public: t.procedure.query(() => null),
+    private: t.procedure.meta({ requiresAuth: true }).query(() => null),
+  })
+  const doc = generateOpenAPIDocumentFromTRPCRouter(router, {
+    pathPrefix: '/trpc',
+    processOperation: (op, meta) => {
+      if (meta?.requiresAuth) {
+        op.security = [{ bearerAuth: [] }]
+      }
+    },
+  })
+  fs.mkdirSync('temp/examples', { recursive: true })
+  fs.writeFileSync(
+    'temp/examples/operation-processing.json',
+    JSON.stringify(doc, null, 2),
+  )
+  expect(doc).toMatchSnapshot()
+})
