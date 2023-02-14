@@ -20,11 +20,24 @@
     "url": "https://github.com/dtinth/openapi-trpc/issues"
   },
   "devDependencies": {
+    "@changesets/cli": "2.25.0",
+    "@fastify/static": "^6.9.0",
+    "@playwright/test": "^1.30.0",
     "@rushstack/heft": "0.48.7",
     "@rushstack/heft-web-rig": "0.12.10",
+    "@trpc/server": "^10.11.1",
     "@types/heft-jest": "1.0.3",
+    "@types/node": "^18.13.0",
+    "fastify": "^4.13.0",
+    "fastify-static": "^4.7.0",
+    "npm-run-all": "^4.1.5",
     "prettier": "2.7.1",
-    "@changesets/cli": "2.25.0"
+    "swagger-ui-dist": "^4.15.5",
+    "zod": "^3.20.6"
+  },
+  "peerDependencies": {
+    "@trpc/server": "^10.11.1",
+    "zod": "^3.20.6"
   },
   "scripts": {
     "build": "heft build",
@@ -33,5 +46,9 @@
     "release": "./scripts/release",
     "format": "prettier --write .",
     "api": "./scripts/generate-api-docs"
+  },
+  "dependencies": {
+    "openapi-types": "^12.1.0",
+    "zod-to-json-schema": "^3.20.3"
   }
 }

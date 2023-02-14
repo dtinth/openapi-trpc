@@ -10,3 +10,6 @@ temp
 tmp
 .DS_Store
 .data
+/test-results/
+/playwright-report/
+/playwright/.cache/

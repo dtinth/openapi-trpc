@@ -1,0 +1,30 @@
+#!/usr/bin/env node
+
+const fastify = require('fastify')({ logger: true })
+const fastifyStatic = require('@fastify/static')
+
+fastify.get('/swagger-initializer.js', async (request, reply) => {
+  reply.header('Content-Type', 'application/javascript')
+  return `window.onload = ${function () {
+    window.ui = SwaggerUIBundle({
+      url: '/examples/basic.json',
+      dom_id: '#swagger-ui',
+      deepLinking: true,
+      presets: [SwaggerUIBundle.presets.apis, SwaggerUIStandalonePreset],
+      plugins: [SwaggerUIBundle.plugins.DownloadUrl],
+      layout: 'StandaloneLayout',
+    })
+  }};`
+})
+
+fastify.register(fastifyStatic, {
+  root: require('swagger-ui-dist').getAbsoluteFSPath(),
+})
+
+fastify.register(fastifyStatic, {
+  root: require('path').join(__dirname, '../temp/examples'),
+  prefix: '/examples',
+  decorateReply: false,
+})
+
+fastify.listen({ port: 51201 })

@@ -1,0 +1,177 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`works 1`] = `
+Object {
+  "info": Object {
+    "title": "tRPC HTTP-RPC",
+    "version": "",
+  },
+  "openapi": "3.0.0",
+  "paths": Object {
+    "/trpc/dummy.hello.world": Object {
+      "get": Object {
+        "description": "ok",
+        "operationId": "dummy.hello.world",
+        "parameters": Array [
+          Object {
+            "content": Object {
+              "application/json": Object {
+                "schema": Object {
+                  "additionalProperties": false,
+                  "properties": Object {
+                    "name": Object {
+                      "type": "string",
+                    },
+                  },
+                  "required": Array [
+                    "name",
+                  ],
+                  "type": "object",
+                },
+              },
+            },
+            "in": "query",
+            "name": "input",
+          },
+        ],
+        "responses": Object {
+          "200": Object {
+            "content": Object {
+              "application/json": Object {
+                "schema": Object {
+                  "type": "string",
+                },
+              },
+            },
+            "description": "",
+          },
+        },
+        "tags": Array [
+          "dummy",
+        ],
+      },
+    },
+    "/trpc/example.createGreeting": Object {
+      "post": Object {
+        "operationId": "example.createGreeting",
+        "requestBody": Object {
+          "content": Object {
+            "application/json": Object {
+              "schema": Object {
+                "additionalProperties": false,
+                "description": "Input for createGreeting",
+                "properties": Object {
+                  "name": Object {
+                    "description": "The name to greet",
+                    "type": "string",
+                  },
+                },
+                "type": "object",
+              },
+            },
+          },
+        },
+        "responses": Object {
+          "200": Object {
+            "content": Object {
+              "application/json": Object {
+                "schema": Object {
+                  "description": "The greeting text",
+                  "type": "string",
+                },
+              },
+            },
+            "description": "The greeting text",
+          },
+        },
+        "summary": "Creates a greeting",
+        "tags": Array [
+          "example",
+        ],
+      },
+    },
+    "/trpc/example.getAll": Object {
+      "get": Object {
+        "operationId": "example.getAll",
+        "parameters": Array [
+          Object {
+            "content": Object {
+              "application/json": Object {
+                "schema": Object {
+                  "additionalProperties": false,
+                  "properties": Object {},
+                  "type": "object",
+                },
+              },
+            },
+            "in": "query",
+            "name": "input",
+          },
+        ],
+        "responses": Object {
+          "200": Object {
+            "content": Object {
+              "application/json": Object {
+                "schema": Object {
+                  "items": Object {
+                    "additionalProperties": false,
+                    "properties": Object {
+                      "id": Object {
+                        "type": "string",
+                      },
+                    },
+                    "required": Array [
+                      "id",
+                    ],
+                    "type": "object",
+                  },
+                  "type": "array",
+                },
+              },
+            },
+            "description": "",
+          },
+        },
+        "tags": Array [
+          "example",
+        ],
+      },
+    },
+    "/trpc/example.hello": Object {
+      "get": Object {
+        "operationId": "example.hello",
+        "parameters": Array [
+          Object {
+            "content": Object {
+              "application/json": Object {
+                "schema": Object {
+                  "additionalProperties": false,
+                  "properties": Object {
+                    "text": Object {
+                      "type": "string",
+                    },
+                  },
+                  "required": Array [
+                    "text",
+                  ],
+                  "type": "object",
+                },
+              },
+            },
+            "in": "query",
+            "name": "input",
+          },
+        ],
+        "responses": Object {
+          "200": Object {
+            "description": "",
+          },
+        },
+        "tags": Array [
+          "example",
+        ],
+      },
+    },
+  },
+}
+`;
