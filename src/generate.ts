@@ -147,7 +147,8 @@ function toJsonSchema(input: ZodType) {
   return output
 }
 
-// 😭
+// 😭 THIS IS BAD CODE 😭
+// Someone please PR a better solution
 type MetaOf<R extends Router<any>> = R extends {
   _def: { _config: { $types: { meta: OperationMeta } } }
 }
