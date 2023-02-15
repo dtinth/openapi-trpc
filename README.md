@@ -4,7 +4,7 @@ _Not to be confused with [trpc-openapi](https://github.com/jlalmes/trpc-openapi)
 
 The `openapi-trpc` package is a tool to generate OpenAPI v3 spec from a [tRPC](https://trpc.io) router, adhering to tRPC’s [HTTP RPC Specification](https://trpc.io/docs/rpc). This lets you take an existing tRPC router, and generate an OpenAPI spec from it. From there, you can use the spec to generate a client, or use it to document your API.
 
-## Synopsis
+## Usage
 
 When initializing tRPC with `initTRPC`, add `.meta<OperationMeta>()` to the chain:
 
@@ -26,9 +26,33 @@ const doc = generateOpenAPIDocumentFromTRPCRouter(appRouter, {
 })
 ```
 
+Inside your procedures, you can add metadata to the OpenAPI spec by adding `.meta()` to the chain. If the meta object contains the [`deprecated`, `description`, `externalDocs`, `summary`, or `tags` keys](https://swagger.io/specification/#operation-object), they will be added to the OpenAPI spec.
+
+In your Zod schema (yes, you must use Zod, as other schema libraries are not supported), you can use `.describe()` to add a description to each field, and they will be added to the schema in the OpenAPI spec (thanks to [zod-to-json-schema](https://www.npmjs.com/package/zod-to-json-schema)).
+
+```ts
+t.procedure
+  .meta({ summary: '…', description: '…' })
+  .input(
+    z.object({
+      id: z.number().describe('…'),
+      /* ... */
+    }),
+  )
+  .query(() => {
+    /* … */
+  })
+```
+
 You can then use the `doc` to generate API documentation or a client.
 
 ![basic](https://user-images.githubusercontent.com/193136/218788215-f7f9892b-c120-403e-ba4d-ebf334f5a2a6.png)
+
+More advanced usage:
+
+- You can use your own type for the meta object, to [add extra metadata to the tRPC procedure](https://trpc.io/docs/metadata). It is recommended that the type should extend `OperationMeta`.
+
+- You can also provide `processOperation` to customize the OpenAPI spec on a per-operation (i.e. tRPC procedure) basis. This allows adding more metadata to the spec, such as `security` (for authentication) or `servers`. The function is called with the operation’s OpenAPI spec, and the tRPC procedure’s metadata. It may mutate the spec, or return a new one. For more information, [see the tests](./src/generate.test.ts).
 
 ## `openapi-trpc` vs `trpc-openapi`
 

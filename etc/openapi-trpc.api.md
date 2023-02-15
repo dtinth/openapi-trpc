@@ -5,7 +5,9 @@
 ```ts
 
 import { OpenAPIV3 } from 'openapi-types';
+import { RootConfig } from '@trpc/server';
 import { Router } from '@trpc/server';
+import { RouterDef } from '@trpc/server';
 
 // Warning: (ae-forgotten-export) The symbol "MetaOf" needs to be exported by the entry point index.d.ts
 //
