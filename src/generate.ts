@@ -3,7 +3,7 @@ import { DummyProcedure, DummyRouter } from './dummyRouter'
 import { z, AnyZodObject, ZodType } from 'zod'
 import { OpenAPIV3 } from 'openapi-types'
 import { OperationMeta, allowedOperationKeys } from './meta'
-import { Router } from '@trpc/server'
+import { RootConfig, Router, RouterDef } from '@trpc/server'
 
 /**
  * @public
@@ -147,10 +147,8 @@ function toJsonSchema(input: ZodType) {
   return output
 }
 
-// 😭 THIS IS BAD CODE 😭
-// Someone please PR a better solution
-type MetaOf<R extends Router<any>> = R extends {
-  _def: { _config: { $types: { meta: OperationMeta } } }
-}
-  ? R['_def']['_config']['$types']['meta']
+type MetaOf<R extends Router<any>> = R extends Router<RouterDef<infer D, any>>
+  ? D extends RootConfig<infer C>
+    ? C['meta']
+    : never
   : never
