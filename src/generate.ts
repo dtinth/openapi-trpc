@@ -31,7 +31,15 @@ export function generateOpenAPIDocumentFromTRPCRouter<R extends Router<any>>(
       )
     const output = procDef.output
     const inputSchema = toJsonSchema(input)
-    const outputSchema = output ? toJsonSchema(asZodType(output)) : undefined
+    const outputSchema = output
+      ? toJsonSchema(
+          z.object({
+            result: z.object({
+              data: asZodType(output),
+            }),
+          }),
+        )
+      : undefined
     const key = [
       '',
       ...(options.pathPrefix || '/').split('/').filter(Boolean),

@@ -108,7 +108,25 @@ Object {
             "content": Object {
               "application/json": Object {
                 "schema": Object {
-                  "type": "string",
+                  "additionalProperties": false,
+                  "properties": Object {
+                    "result": Object {
+                      "additionalProperties": false,
+                      "properties": Object {
+                        "data": Object {
+                          "type": "string",
+                        },
+                      },
+                      "required": Array [
+                        "data",
+                      ],
+                      "type": "object",
+                    },
+                  },
+                  "required": Array [
+                    "result",
+                  ],
+                  "type": "object",
                 },
               },
             },
@@ -145,8 +163,26 @@ Object {
             "content": Object {
               "application/json": Object {
                 "schema": Object {
-                  "description": "The greeting text",
-                  "type": "string",
+                  "additionalProperties": false,
+                  "properties": Object {
+                    "result": Object {
+                      "additionalProperties": false,
+                      "properties": Object {
+                        "data": Object {
+                          "description": "The greeting text",
+                          "type": "string",
+                        },
+                      },
+                      "required": Array [
+                        "data",
+                      ],
+                      "type": "object",
+                    },
+                  },
+                  "required": Array [
+                    "result",
+                  ],
+                  "type": "object",
                 },
               },
             },
@@ -182,19 +218,37 @@ Object {
             "content": Object {
               "application/json": Object {
                 "schema": Object {
-                  "items": Object {
-                    "additionalProperties": false,
-                    "properties": Object {
-                      "id": Object {
-                        "type": "string",
+                  "additionalProperties": false,
+                  "properties": Object {
+                    "result": Object {
+                      "additionalProperties": false,
+                      "properties": Object {
+                        "data": Object {
+                          "items": Object {
+                            "additionalProperties": false,
+                            "properties": Object {
+                              "id": Object {
+                                "type": "string",
+                              },
+                            },
+                            "required": Array [
+                              "id",
+                            ],
+                            "type": "object",
+                          },
+                          "type": "array",
+                        },
                       },
+                      "required": Array [
+                        "data",
+                      ],
+                      "type": "object",
                     },
-                    "required": Array [
-                      "id",
-                    ],
-                    "type": "object",
                   },
-                  "type": "array",
+                  "required": Array [
+                    "result",
+                  ],
+                  "type": "object",
                 },
               },
             },
