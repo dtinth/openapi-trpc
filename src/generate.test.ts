@@ -37,6 +37,24 @@ it('works', () => {
   expect(doc).toMatchSnapshot()
 })
 
+it('works with array', () => {
+  const t = initTRPC.meta<OperationMeta>().create()
+  const router = t.router({
+    exampleWithArrayAsInput: t.router({
+      queryWithArrayInput: t.procedure
+        .input(z.array(z.string()))
+        .query(() => null),
+    }),
+    dummy: createDummyRouter(t),
+  })
+  const doc = generateOpenAPIDocumentFromTRPCRouter(router, {
+    pathPrefix: '/trpc',
+  })
+  fs.mkdirSync('temp/examples', { recursive: true })
+  fs.writeFileSync('temp/examples/basic.json', JSON.stringify(doc, null, 2))
+  expect(doc).toMatchSnapshot()
+})
+
 it('lets you post-process each operation, giving typed access to the meta', () => {
   interface AppMeta extends OperationMeta {
     requiresAuth?: boolean

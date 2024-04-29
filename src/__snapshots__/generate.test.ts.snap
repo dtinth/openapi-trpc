@@ -298,3 +298,105 @@ Object {
   },
 }
 `;
+
+exports[`works with array 1`] = `
+Object {
+  "info": Object {
+    "title": "tRPC HTTP-RPC",
+    "version": "",
+  },
+  "openapi": "3.0.0",
+  "paths": Object {
+    "/trpc/dummy.hello.world": Object {
+      "get": Object {
+        "description": "ok",
+        "operationId": "dummy.hello.world",
+        "parameters": Array [
+          Object {
+            "content": Object {
+              "application/json": Object {
+                "schema": Object {
+                  "additionalProperties": false,
+                  "properties": Object {
+                    "name": Object {
+                      "type": "string",
+                    },
+                  },
+                  "required": Array [
+                    "name",
+                  ],
+                  "type": "object",
+                },
+              },
+            },
+            "in": "query",
+            "name": "input",
+          },
+        ],
+        "responses": Object {
+          "200": Object {
+            "content": Object {
+              "application/json": Object {
+                "schema": Object {
+                  "additionalProperties": false,
+                  "properties": Object {
+                    "result": Object {
+                      "additionalProperties": false,
+                      "properties": Object {
+                        "data": Object {
+                          "type": "string",
+                        },
+                      },
+                      "required": Array [
+                        "data",
+                      ],
+                      "type": "object",
+                    },
+                  },
+                  "required": Array [
+                    "result",
+                  ],
+                  "type": "object",
+                },
+              },
+            },
+            "description": "",
+          },
+        },
+        "tags": Array [
+          "dummy",
+        ],
+      },
+    },
+    "/trpc/exampleWithArrayAsInput.queryWithArrayInput": Object {
+      "get": Object {
+        "operationId": "exampleWithArrayAsInput.queryWithArrayInput",
+        "parameters": Array [
+          Object {
+            "content": Object {
+              "application/json": Object {
+                "schema": Object {
+                  "items": Object {
+                    "type": "string",
+                  },
+                  "type": "array",
+                },
+              },
+            },
+            "in": "query",
+            "name": "input",
+          },
+        ],
+        "responses": Object {
+          "200": Object {
+            "description": "",
+          },
+        },
+        "tags": Array [
+          "exampleWithArrayAsInput",
+        ],
+      },
+    },
+  },
+}
+`;

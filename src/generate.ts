@@ -1,6 +1,13 @@
 import { zodToJsonSchema } from 'zod-to-json-schema'
 import { DummyProcedure, DummyRouter } from './dummyRouter'
-import { z, AnyZodObject, ZodType } from 'zod'
+import {
+  z,
+  AnyZodObject,
+  ZodType,
+  ZodFirstPartyTypeKind,
+  ZodArray,
+  ZodTypeAny,
+} from 'zod'
 import { OpenAPIV3 } from 'openapi-types'
 import { OperationMeta, allowedOperationKeys } from './meta'
 import { RootConfig, Router, RouterDef } from '@trpc/server'
@@ -23,12 +30,18 @@ export function generateOpenAPIDocumentFromTRPCRouter<R extends Router<any>>(
   }
   for (const [procName, proc] of Object.entries(procs)) {
     const procDef = proc._def as unknown as DummyProcedure
-    const input = procDef.inputs
-      .slice(1)
-      .reduce<AnyZodObject>(
-        (acc, cur) => asZodObject(acc).merge(asZodObject(cur)),
-        asZodObject(procDef.inputs[0] || z.object({})),
-      )
+
+    // ZodArrays are also correct, as .splice(1) will return an empty array
+    // it's ok just to return the array itself
+    const input =
+      getZodTypeName(procDef.inputs[0]) === ZodFirstPartyTypeKind.ZodArray
+        ? (procDef.inputs[0] as ZodArray<ZodTypeAny>)
+        : procDef.inputs
+            .slice(1)
+            .reduce<AnyZodObject>(
+              (acc, cur) => asZodObject(acc).merge(asZodObject(cur)),
+              asZodObject(procDef.inputs[0] || z.object({})),
+            )
     const output = procDef.output
     const inputSchema = toJsonSchema(input)
     const outputSchema = output
@@ -126,7 +139,7 @@ function getZodTypeName(input: unknown) {
 }
 
 function asZodObject(input: unknown) {
-  if (getZodTypeName(input) !== 'ZodObject') {
+  if (getZodTypeName(input) !== ZodFirstPartyTypeKind.ZodObject) {
     throw new Error('Expected a ZodObject, received: ' + String(input))
   }
   return input as AnyZodObject
