@@ -4,7 +4,7 @@
 
 ### Minor Changes
 
-- fa6062a: Allow specifying ZodArray as in input
+- 32f04c4: Allow specifying ZodArray as in input
 
 ## 0.1.2
 
