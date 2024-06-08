@@ -1,9 +1,9 @@
 import { initTRPC } from '@trpc/server'
-import { generateOpenAPIDocumentFromTRPCRouter } from './generate'
-import { OperationMeta } from './meta'
+import fs from 'fs'
 import { z } from 'zod'
 import { createDummyRouter } from './dummyRouter'
-import fs from 'fs'
+import { generateOpenAPIDocumentFromTRPCRouter } from './generate'
+import { OperationMeta } from './meta'
 
 it('works', () => {
   const t = initTRPC.meta<OperationMeta>().create()
@@ -51,7 +51,7 @@ it('works with array', () => {
     pathPrefix: '/trpc',
   })
   fs.mkdirSync('temp/examples', { recursive: true })
-  fs.writeFileSync('temp/examples/basic.json', JSON.stringify(doc, null, 2))
+  fs.writeFileSync('temp/examples/array.json', JSON.stringify(doc, null, 2))
   expect(doc).toMatchSnapshot()
 })
 

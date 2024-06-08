@@ -49,5 +49,6 @@
   "dependencies": {
     "openapi-types": "^12.1.0",
     "zod-to-json-schema": "^3.20.3"
-  }
+  },
+  "packageManager": "pnpm@7.13.1+sha256.e641f4de1b30ffff2d6c235f9bfe7db3ccd07584b446482c9578b51a99231668"
 }
