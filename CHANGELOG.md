@@ -1,5 +1,11 @@
 # openapi-trpc
 
+## 0.2.0
+
+### Minor Changes
+
+- fa6062a: Allow specifying ZodArray as in input
+
 ## 0.1.2
 
 ### Patch Changes
