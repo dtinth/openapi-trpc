@@ -139,10 +139,14 @@ function getZodTypeName(input: unknown) {
 }
 
 function asZodObject(input: unknown) {
-  if (getZodTypeName(input) !== ZodFirstPartyTypeKind.ZodObject) {
-    throw new Error('Expected a ZodObject, received: ' + String(input))
+  if (
+    getZodTypeName(input) !== ZodFirstPartyTypeKind.ZodObject &&
+    getZodTypeName(input) !== ZodFirstPartyTypeKind.ZodVoid &&
+    getZodTypeName(input) !== ZodFirstPartyTypeKind.ZodOptional
+  ) {
+    throw new Error("Expected a ZodObject, received: " + String(input));
   }
-  return input as AnyZodObject
+  return input as AnyZodObject;
 }
 
 function asZodType(input: unknown) {
