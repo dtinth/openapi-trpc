@@ -86,9 +86,11 @@ it('works with optional zod object', () => {
     example: t.router({
       optionalObjectTest: t.procedure
         .input(
-          z.object({
-            anOption: z.string(),
-          }).optional()
+          z
+            .object({
+              anOption: z.string(),
+            })
+            .optional(),
         )
         .query(() => null),
     }),
@@ -98,6 +100,9 @@ it('works with optional zod object', () => {
     pathPrefix: '/trpc',
   })
   fs.mkdirSync('temp/examples', { recursive: true })
-  fs.writeFileSync('temp/examples/optional-object.json', JSON.stringify(doc, null, 2))
+  fs.writeFileSync(
+    'temp/examples/optional-object.json',
+    JSON.stringify(doc, null, 2),
+  )
   expect(doc).toMatchSnapshot()
 })
