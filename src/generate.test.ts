@@ -79,3 +79,25 @@ it('lets you post-process each operation, giving typed access to the meta', () =
   )
   expect(doc).toMatchSnapshot()
 })
+
+it('works with optional zod object', () => {
+  const t = initTRPC.meta<OperationMeta>().create()
+  const router = t.router({
+    example: t.router({
+      optionalObjectTest: t.procedure
+        .input(
+          z.object({
+            anOption: z.string(),
+          }).optional()
+        )
+        .query(() => null),
+    }),
+    dummy: createDummyRouter(t),
+  })
+  const doc = generateOpenAPIDocumentFromTRPCRouter(router, {
+    pathPrefix: '/trpc',
+  })
+  fs.mkdirSync('temp/examples', { recursive: true })
+  fs.writeFileSync('temp/examples/optional-object.json', JSON.stringify(doc, null, 2))
+  expect(doc).toMatchSnapshot()
+})
