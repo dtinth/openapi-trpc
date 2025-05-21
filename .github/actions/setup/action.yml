@@ -7,13 +7,13 @@ runs:
   using: 'composite'
   steps:
     - name: Setup pnpm
-      uses: pnpm/action-setup@c3b53f6a16e57305370b4ae5a540c2077a1d50dd # v2.2.4
+      uses: pnpm/action-setup@v4
       with:
-        version: 7.13.1
+        version: 10.11.0
     - name: Setup Node.js
-      uses: actions/setup-node@v3
+      uses: actions/setup-node@v4
       with:
-        node-version: 16
+        node-version: 22
         cache: pnpm
     - name: Install dependencies and build
       run: pnpm install --prefer-offline
