@@ -32,7 +32,7 @@ importers:
         version: 0.12.10(@rushstack/heft@0.48.7)
       '@trpc/server':
         specifier: ^10.11.1
-        version: 10.45.2
+        version: 10.11.1
       '@types/heft-jest':
         specifier: 1.0.3
         version: 1.0.3
@@ -510,8 +510,8 @@ packages:
     resolution: {integrity: sha512-RbzJvlNzmRq5c3O09UipeuXno4tA1FE6ikOjxZK0tuxVv3412l64l5t1W5pj4+rJq9vpkm/kwiR07aZXnsKPxw==}
     engines: {node: '>= 6'}
 
-  '@trpc/server@10.45.2':
-    resolution: {integrity: sha512-wOrSThNNE4HUnuhJG6PfDRp4L2009KDVxsd+2VYH8ro6o/7/jwYZ8Uu5j+VaW+mOmc8EHerHzGcdbGNQSAUPgg==}
+  '@trpc/server@10.11.1':
+    resolution: {integrity: sha512-7FnvuaNsSl6HLloh0a297McS4yjhbqg/bw1h/XOAKduNPUQwXNmJf48X1PAsD8ODtO1Rrjz9TeynJD7uCEn0xQ==}
 
   '@trysound/sax@0.2.0':
     resolution: {integrity: sha512-L7z9BgrNEcYyUYtF+HaEfiS5ebkh9jXqbszz7pC0hRBPaatV0XjSD3+eHrpqFemQfgwiFF0QPIarnIihIDn7OA==}
@@ -5052,7 +5052,7 @@ snapshots:
 
   '@tootallnate/once@1.1.2': {}
 
-  '@trpc/server@10.45.2': {}
+  '@trpc/server@10.11.1': {}
 
   '@trysound/sax@0.2.0': {}
 
