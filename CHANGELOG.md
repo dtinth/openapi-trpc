@@ -1,5 +1,11 @@
 # openapi-trpc
 
+## 0.2.1
+
+### Patch Changes
+
+- 52e8fa7: Support optional Zod input schema in router definitions
+
 ## 0.2.0
 
 ### Minor Changes
