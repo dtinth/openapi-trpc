@@ -66,7 +66,7 @@ it('lets you post-process each operation, giving typed access to the meta', () =
   })
   const doc = generateOpenAPIDocumentFromTRPCRouter(router, {
     pathPrefix: '/trpc',
-    processOperation: (op, meta) => {
+    processOperation: (op, meta: AppMeta | undefined) => {
       if (meta?.requiresAuth) {
         op.security = [{ bearerAuth: [] }]
       }
@@ -102,6 +102,45 @@ it('works with optional zod object', () => {
   fs.mkdirSync('temp/examples', { recursive: true })
   fs.writeFileSync(
     'temp/examples/optional-object.json',
+    JSON.stringify(doc, null, 2),
+  )
+  expect(doc).toMatchSnapshot()
+})
+
+it('works with zod intersection and default', () => {
+  const t = initTRPC.meta<OperationMeta>().create()
+  const router = t.router({
+    example: t.router({
+      intersectionTest: t.procedure
+        .input(
+          z
+            .object({
+              base: z.string(),
+            })
+            .and(
+              z.object({
+                extended: z.number(),
+              })
+            ),
+        )
+        .query(() => null),
+      defaultTest: t.procedure
+        .input(
+          z
+            .object({
+              value: z.string().default('default-value'),
+            })
+        )
+        .query(() => null),
+    }),
+    dummy: createDummyRouter(t),
+  })
+  const doc = generateOpenAPIDocumentFromTRPCRouter(router, {
+    pathPrefix: '/trpc',
+  })
+  fs.mkdirSync('temp/examples', { recursive: true })
+  fs.writeFileSync(
+    'temp/examples/intersection-default.json',
     JSON.stringify(doc, null, 2),
   )
   expect(doc).toMatchSnapshot()
