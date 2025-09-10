@@ -10,7 +10,7 @@ import {
 } from 'zod'
 import { OpenAPIV3 } from 'openapi-types'
 import { OperationMeta, allowedOperationKeys } from './meta'
-import { RootConfig, Router, RouterDef } from '@trpc/server'
+import { RootConfig, Router, AnyRouterDef } from '@trpc/server'
 
 /**
  * @public
@@ -142,7 +142,9 @@ function asZodObject(input: unknown) {
   if (
     getZodTypeName(input) !== ZodFirstPartyTypeKind.ZodObject &&
     getZodTypeName(input) !== ZodFirstPartyTypeKind.ZodVoid &&
-    getZodTypeName(input) !== ZodFirstPartyTypeKind.ZodOptional
+    getZodTypeName(input) !== ZodFirstPartyTypeKind.ZodOptional &&
+    getZodTypeName(input) !== ZodFirstPartyTypeKind.ZodIntersection &&
+    getZodTypeName(input) !== ZodFirstPartyTypeKind.ZodDefault
   ) {
     throw new Error('Expected a ZodObject, received: ' + String(input))
   }
@@ -172,7 +174,7 @@ function toJsonSchema(input: ZodType) {
   return output
 }
 
-type MetaOf<R extends Router<any>> = R extends Router<RouterDef<infer D, any>>
+type MetaOf<R extends Router<any>> = R extends Router<AnyRouterDef<infer D, any>>
   ? D extends RootConfig<infer C>
     ? C['meta']
     : never
